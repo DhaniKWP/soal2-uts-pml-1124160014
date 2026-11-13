@@ -1,4 +1,3 @@
-
 class Profile {
   final String nama;
   final String nim;
