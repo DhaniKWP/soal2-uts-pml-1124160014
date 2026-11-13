@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/profile.dart';
 import '../widgets/info_tile.dart';
+import 'about_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
@@ -104,6 +105,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
+            ),
+
+            const SizedBox(height: 15),
+
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person_outline),
+              label: const Text('Tentang Saya'),
             ),
 
             const SizedBox(height: 15),
