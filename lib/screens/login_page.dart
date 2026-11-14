@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../models/profile.dart';
+import 'profile_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,10 +24,9 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+
   Future<void> login() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
 
     setState(() {
       isLoading = true;
@@ -33,17 +34,38 @@ class _LoginPageState extends State<LoginPage> {
 
     await Future.delayed(const Duration(seconds: 2));
 
-    if (!mounted) return;
+    if (_nimController.text == '1124160014' &&
+        _passwordController.text == 'global') {
 
-    setState(() {
-      isLoading = false;
-    });
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(
+            profile: Profile(
+              nama: 'Dhani Kusuma Wardana Putra',
+              nim: '1124160014',
+              prodi: 'Software Engineering',
+              kelas: 'TI24PSE3',
+              bio: 'Mahasiswa yang tertarik dengan pemrograman.',
+              email: 'dhanikusuma256@gmail.com',
+              hp: '0895321813103',
+              github: 'github.com/dhaniKWP',
+            ),
+          ),
+        ),
+      );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Data berhasil divalidasi'),
-      ),
-    );
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('NIM atau password salah'),
+        ),
+      );
+    }
   }
 
   @override
