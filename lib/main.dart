@@ -42,16 +42,20 @@ class _MyAppState extends State<MyApp> {
       themeMode: themeMode,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: const Color(0xFF2563EB),
           brightness: Brightness.light,
         ),
+        scaffoldBackgroundColor: const Color(0xFFF5F8FF),
+        cardColor: Colors.white,
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: const Color(0xFF38BDF8),
           brightness: Brightness.dark,
         ),
+        scaffoldBackgroundColor: const Color(0xFF0F172A),
+        cardColor: const Color(0xFF1E293B),
         useMaterial3: true,
       ),
       routes: {
