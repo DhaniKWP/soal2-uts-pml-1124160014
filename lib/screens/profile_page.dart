@@ -21,12 +21,14 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late Profile profile;
+  late bool isDarkMode;
   int selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     profile = widget.profile;
+    isDarkMode = widget.isDarkMode;
   }
 
   @override
@@ -55,8 +57,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   secondary: const Icon(Icons.dark_mode),
                   title: const Text('Dark Mode'),
                   subtitle: const Text('Aktifkan tampilan gelap'),
-                  value: widget.isDarkMode,
-                  onChanged: widget.onThemeChanged,
+                  value: isDarkMode,
+                  onChanged: (value) {
+                    setState(() {
+                      isDarkMode = value;
+                    });
+                    widget.onThemeChanged(value);
+                  },
                 ),
               ),
             ],
