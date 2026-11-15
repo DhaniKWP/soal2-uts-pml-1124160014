@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/profile.dart';
 import '../widgets/info_tile.dart';
 import 'about_page.dart';
+import 'login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
@@ -29,6 +30,39 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     profile = widget.profile;
     isDarkMode = widget.isDarkMode;
+  }
+
+  void logout() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Yakin ingin keluar dari akun?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Batal'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(
+                    onThemeChanged: widget.onThemeChanged,
+                    isDarkMode: isDarkMode,
+                  ),
+                ),
+                    (route) => false,
+              );
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -64,6 +98,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     });
                     widget.onThemeChanged(value);
                   },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.logout, color: Colors.red),
+                  title: const Text('Logout'),
+                  subtitle: const Text('Keluar dari akun'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: logout,
                 ),
               ),
             ],
