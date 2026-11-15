@@ -18,7 +18,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-
   final _nimController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -31,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -41,9 +39,10 @@ class _LoginPageState extends State<LoginPage> {
 
     await Future.delayed(const Duration(seconds: 2));
 
+    if (!mounted) return;
+
     if (_nimController.text == '1124160014' &&
         _passwordController.text == 'global') {
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -63,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       );
-
     } else {
       setState(() {
         isLoading = false;
@@ -80,69 +78,106 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login Mahasiswa'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.account_circle,
-                size: 100,
-              ),
-
-              const SizedBox(height: 20),
-
-              TextFormField(
-                controller: _nimController,
-                decoration: const InputDecoration(
-                  labelText: 'NIM',
-                  prefixIcon: Icon(Icons.person),
-                  border: OutlineInputBorder(),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.school_rounded,
+                  size: 60,
+                  color: Colors.grey
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'NIM harus diisi';
-                  }
-                  return null;
-                },
-              ),
 
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
-                  border: OutlineInputBorder(),
+                const Text(
+                  'Aplikasi Profil Mahasiswa',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password harus diisi';
-                  }
-                  return null;
-                },
-              ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 8),
 
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : login,
-                  child: isLoading
-                      ? const CircularProgressIndicator()
-                      : const Text('Login'),
+                Text(
+                  'Silakan login untuk melanjutkan',
+                  style: TextStyle(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurfaceVariant,
+                  ),
                 ),
-              ),
-            ],
+
+                const SizedBox(height: 30),
+
+                TextFormField(
+                  controller: _nimController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'NIM',
+                    prefixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'NIM harus diisi';
+                    }
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 16),
+
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password harus diisi';
+                    }
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 24),
+
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: isLoading ? null : login,
+                    child: isLoading
+                        ? const SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    )
+                        : const Text('Login'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
