@@ -26,21 +26,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     super.initState();
 
-    namaController = TextEditingController(
-      text: widget.profile.nama,
-    );
-    bioController = TextEditingController(
-      text: widget.profile.bio,
-    );
-    emailController = TextEditingController(
-      text: widget.profile.email,
-    );
-    hpController = TextEditingController(
-      text: widget.profile.hp,
-    );
-    githubController = TextEditingController(
-      text: widget.profile.github,
-    );
+    namaController = TextEditingController(text: widget.profile.nama);
+    bioController = TextEditingController(text: widget.profile.bio);
+    emailController = TextEditingController(text: widget.profile.email);
+    hpController = TextEditingController(text: widget.profile.hp);
+    githubController = TextEditingController(text: widget.profile.github);
   }
 
   @override
@@ -51,6 +41,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
     hpController.dispose();
     githubController.dispose();
     super.dispose();
+  }
+
+  void simpanProfile() {
+    if (!_formKey.currentState!.validate()) return;
+
+    final profileBaru = widget.profile.copyWith(
+      nama: namaController.text.trim(),
+      bio: bioController.text.trim(),
+      email: emailController.text.trim(),
+      hp: hpController.text.trim(),
+      github: githubController.text.trim(),
+    );
+
+    Navigator.pop(context, profileBaru);
   }
 
   @override
@@ -90,6 +94,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 prefixIcon: Icon(Icons.person),
                 border: OutlineInputBorder(),
               ),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Nama harus diisi';
+                }
+                return null;
+              },
             ),
 
             const SizedBox(height: 16),
@@ -115,6 +125,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 prefixIcon: Icon(Icons.email),
                 border: OutlineInputBorder(),
               ),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Email harus diisi';
+                }
+
+                if (!RegExp(
+                  r'^[\w.-]+@[\w.-]+\.\w+$',
+                ).hasMatch(value.trim())) {
+                  return 'Format email tidak valid';
+                }
+
+                return null;
+              },
             ),
 
             const SizedBox(height: 16),
@@ -127,6 +150,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 prefixIcon: Icon(Icons.phone),
                 border: OutlineInputBorder(),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Nomor HP harus diisi';
+                }
+
+                if (!RegExp(r'^\d{10,13}$').hasMatch(value)) {
+                  return 'Nomor HP harus 10-13 digit';
+                }
+
+                return null;
+              },
             ),
 
             const SizedBox(height: 16),
@@ -144,9 +178,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
             SizedBox(
               height: 50,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Simpan Perubahan'),
+              child: ElevatedButton.icon(
+                onPressed: simpanProfile,
+                icon: const Icon(Icons.save),
+                label: const Text('Simpan Perubahan'),
               ),
             ),
 
