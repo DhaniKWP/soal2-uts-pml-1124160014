@@ -3,7 +3,14 @@ import '../models/profile.dart';
 import 'profile_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final ValueChanged<bool> onThemeChanged;
+  final bool isDarkMode;
+
+  const LoginPage({
+    super.key,
+    required this.onThemeChanged,
+    required this.isDarkMode,
+  });
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -51,6 +58,8 @@ class _LoginPageState extends State<LoginPage> {
               hp: '0895321813103',
               github: 'github.com/dhaniKWP',
             ),
+            onThemeChanged: widget.onThemeChanged,
+            isDarkMode: widget.isDarkMode,
           ),
         ),
       );

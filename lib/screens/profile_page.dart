@@ -5,9 +5,13 @@ import 'about_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
+  final ValueChanged<bool> onThemeChanged;
+  final bool isDarkMode;
 
   const ProfilePage({
     super.key,
+    required this.onThemeChanged,
+    required this.isDarkMode,
     required this.profile,
   });
 
@@ -43,8 +47,19 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           profileContent(),
           const AboutPage(),
-          const Center(
-            child: Text('Pengaturan'),
+          ListView(
+            padding: const EdgeInsets.all(20),
+            children: [
+              Card(
+                child: SwitchListTile(
+                  secondary: const Icon(Icons.dark_mode),
+                  title: const Text('Dark Mode'),
+                  subtitle: const Text('Aktifkan tampilan gelap'),
+                  value: widget.isDarkMode,
+                  onChanged: widget.onThemeChanged,
+                ),
+              ),
+            ],
           ),
         ],
       ),
