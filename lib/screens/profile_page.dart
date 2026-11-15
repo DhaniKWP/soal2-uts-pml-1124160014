@@ -3,6 +3,7 @@ import '../models/profile.dart';
 import '../widgets/info_tile.dart';
 import 'about_page.dart';
 import 'login_page.dart';
+import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
@@ -63,6 +64,23 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
+  }
+
+  Future<void> editProfile() async {
+    final result = await Navigator.push<Profile>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfilePage(
+          profile: profile,
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        profile = result;
+      });
+    }
   }
 
   @override
@@ -140,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       floatingActionButton: selectedIndex == 0
           ? FloatingActionButton(
-        onPressed: () {},
+        onPressed: editProfile,
         child: const Icon(Icons.edit),
       )
           : null,
