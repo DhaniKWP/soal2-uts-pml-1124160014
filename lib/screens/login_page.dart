@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/profile.dart';
-import 'profile_page.dart';
 
 class LoginPage extends StatefulWidget {
   final ValueChanged<bool> onThemeChanged;
@@ -44,25 +42,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (_nimController.text == '1124160014' &&
         _passwordController.text == 'global') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProfilePage(
-            profile: Profile(
-              nama: 'Dhani Kusuma Wardana Putra',
-              nim: '1124160014',
-              prodi: 'Software Engineering',
-              kelas: 'TI24PSE3',
-              bio: 'Mahasiswa yang tertarik dengan pemrograman.',
-              email: 'dhanikusuma256@gmail.com',
-              hp: '0895321813103',
-              github: 'github.com/dhaniKWP',
-            ),
-            onThemeChanged: widget.onThemeChanged,
-            isDarkMode: widget.isDarkMode,
-          ),
-        ),
-      );
+      Navigator.pushReplacementNamed(context, '/profile');
     } else {
       setState(() {
         isLoading = false;
@@ -90,11 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                 const Icon(
                   Icons.school_rounded,
                   size: 60,
-                  color: Colors.grey
+                  color: Colors.grey,
                 ),
-
                 const SizedBox(height: 16),
-
                 const Text(
                   'Aplikasi Profil Mahasiswa',
                   textAlign: TextAlign.center,
@@ -103,9 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 8),
-
                 Text(
                   'Silakan login untuk melanjutkan',
                   style: TextStyle(
@@ -114,9 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                         .onSurfaceVariant,
                   ),
                 ),
-
                 const SizedBox(height: 30),
-
                 TextFormField(
                   controller: _nimController,
                   keyboardType: TextInputType.number,
@@ -136,9 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 16),
-
                 TextFormField(
                   controller: _passwordController,
                   obscureText: isPasswordHidden,
@@ -171,9 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 24),
-
                 SizedBox(
                   width: double.infinity,
                   height: 50,
