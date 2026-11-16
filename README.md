@@ -13,7 +13,7 @@ Aplikasi Android berbasis Flutter yang menampilkan informasi profil mahasiswa. P
 
 ## Video Presentasi
 
-blum di buat
+YT: https://youtu.be/C3zxwWMaomo
 
 ## Screenshot Aplikasi
 
